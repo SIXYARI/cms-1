@@ -17,4 +17,4 @@ const testDb = new DatabaseSync(":memory:");
 testDb.exec("CREATE TABLE test (id INTEGER)");
 console.log("sqlite...          [ok]");
 
-console.log("stack...         loaded");
+console.log("stack loaded");
