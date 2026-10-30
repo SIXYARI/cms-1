@@ -11,7 +11,7 @@ if (!username || !password) {
 
 const hash = bcrypt.hashSync(password, 10);
 
-db.prepare("INSERT INTO users (username, password_hash) VALUES (?, ?").run(username, hash);
+db.prepare("INSERT INTO users (username, password_hash) VALUES (?, ?)").run(username, hash);
 
 console.log("Created user: " + username);
 console.log("Stored hash: " + hash);

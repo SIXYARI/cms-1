@@ -16,5 +16,13 @@
     "ejs": "^7.0.2",
     "express": "^5.3.0",
     "express-session": "^1.19.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SIXYARI/cms-1.git"
+  },
+  "bugs": {
+    "url": "https://github.com/SIXYARI/cms-1/issues"
+  },
+  "homepage": "https://github.com/SIXYARI/cms-1#readme"
 }
