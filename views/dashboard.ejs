@@ -14,8 +14,8 @@
         <td><%= post.title %></td>
         <td><%= post.created_at %></td>
         <td>
-            <a href="/admin/delete/<%= post.id %>">Edit</a>
-            <form action="/admin/delete/<%= post.id %>" method="POST" class="inline">
+            <a href="/admin/edit/<%= post.id %>">Edit</a>
+            <form action="/admin/edit/<%= post.id %>" method="POST" class="inline">
                 <button type="submit">Delete</button>
             </form>
         </td>
