@@ -20,7 +20,7 @@ app.use((req, res, next) => {
 });
 
 function requireLogin(req, res, next) {
-    if(!req.session.user) {
+    if (!req.session.user) {
         return res.redirect("/login");
     }
     next();
@@ -39,7 +39,7 @@ app.post("/login", (req, res) => {
     const { username, password } = req.body;
     const user = db.prepare("SELECT * FROM users WHERE username = ?").get(username);
 
-    if(user && bcrypt.compareSync(password, user.password_hash)) {
+    if (user && bcrypt.compareSync(password, user.password_hash)) {
         req.session.user = { id: user.id, username: user.username };
         return res.redirect("/admin");
     };
@@ -65,6 +65,25 @@ app.get("/admin/new", requireLogin, (req, res) => {
 app.post("/admin/new", requireLogin, (req, res) => {
     const { title, body } = req.body;
     db.prepare("INSERT INTO posts (title, body) VALUES (?, ?)").run(title, body);
+    res.redirect("/admin");
+});
+
+app.get("/admin/edit/:id", requireLogin, (req, res) => {
+    const post = db.prepare("SELECT * FROM posts WHERE id = ?").get(req.params.id);
+    if (!post) {
+        return res.status(404).send("Post not found");
+    }
+    res.render("edit", { post });
+});
+
+app.post("/admin/edit/:id", requireLogin, (req, res) => {
+    const { title, body } = req.body;
+    db.prepare("UPDATE posts SET title = ?, body = ? WHERE id = ?").run(title, body, req.params.id);
+    res.redirect('/admin');
+});
+
+app.post("/admin/delete/:id", requireLogin, (req, res) => {
+    db.prepare("DELETE FROM posts WHERE id = ?").run(req.params.id);
     res.redirect("/admin");
 });
 
