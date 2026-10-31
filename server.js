@@ -20,6 +20,22 @@ app.get("/", (req, res) => {
     res.render('index', { posts });
 });
 
+app.get("/login", (req, res) => {
+    res.render("login", { error: null });
+});
+
+app.post("/login", (req, res) => {
+    const { username, password } = req.body;
+    const user = db.prepare("SELECT * FROM users WHERE username = ?").get(username);
+
+    if(user && bcrypt.compareSync(password, user.password_hash)) {
+        req.session.user = { id: user.id, username: user.username };
+        return res.redirect("/admin");
+    };
+
+    res.render("login", { error: "Wrong username or password." })
+});
+
 app.listen(PORT, () => {
     console.log('Server running at http://localhost' + PORT)
 });
